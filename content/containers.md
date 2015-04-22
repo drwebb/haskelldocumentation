@@ -1,15 +1,15 @@
 # Containers
 
-The containers package is the home of high performance *immutable*
-data structures. The implementation and interface for the different structures
-are all conducive to a highly functional style of programming. You will likely
-find that you are will be quite comfortable using these data structures based on
-basic Haskell concepts. The purpose of this document is to give you the
-intuition behind use cases, and to provide enough examples for a programmer to
-make use of these fast data structures. 
+The containers package is the home of high performance *immutable* data
+structures. The implementation and interface for the different structures are
+all conducive to a highly functional style of programming. If you are new to
+this library, you will already be quite comfortable using these data structures
+based on basic Haskell concepts you have learned. This may seem foreign at
+first, but the purpose of this document is to give you the intuition behind use
+cases and to give some concrete examples.
 
-The `List` type is the first illustration of a functional data structure you have likely
-encountered. Recall its definition
+The `List` type is the first illustration of a immutable data structure you have
+likely encountered. Recall its definition:
 
 ```
 List a = Empty
@@ -17,32 +17,39 @@ List a = Empty
 
 ```
 
-and the standard functions that operate on it: maps, folds, scans, etc. Now,
-consider that the recursive definition of lists is what makes them pure and
-immultable. Lists are not like their imperative counterpart Arrays, which
-represent blocks of memory that can be mutated. Lists are important to
-understand in learning the specialized data structures in the containers library,
-and all of the techniques that you have learned in dealing with them will
-directly apply to making the best use of them. 
+and the standard functions that operate on it: `map`, `fold`, `scan`, etc.
+Consider the fact that it is the recursive definition of the `List` type is what
+makes them pure and immutable. If this sounds new, you can just think about how
+any list is defined as a series of function applications to the `Empty` list,
+with the data constructor `Cons` being that function. Lists are not like their
+counterparts in imperative languages such as C arrays, which represent blocks of
+memory that can be mutated. Lists are important to understand in learning the
+specialized data structures in the containers library, and all of the techniques
+that you have learned in dealing with Lists will directly apply to making the
+best use of the new structures. 
 
-In a language like Haskell, immutable data structures should be prefered to
-mutable ones. Unless, there is another reason for choosing a mutable
-data structure. There are many such valid reasons, mostly due to the fact that a
-large number of algorithms are better written with a mutable structure. 
+In Haskell, immutable data structures should be preferred to mutable ones.
+Unless, there is another reason for choosing a mutable data structure. There are
+many such valid reasons.  Some algorithms on mutable structures may be more
+clear to write or faster, but with immutable structures we can more easily
+reason about issues such as thread safety. 
 
 Lists are of course slow at many operations (indexing, appending), and in many
-common usecases they won't work well from a performance perspective in your
+common use cases they won't work well from a performance perspective in your
 applications. However, you will find that in practice there are comparable
-number of usecases where lists already perform optimally. It's fine to favor
+number of use cases where lists already perform optimally. It's fine to favor
 lists in production code in the following areas:
 
 * Operations that act on each element in order
-* Stack like data structures.
+* Stack or Stream like data structures.
 
-It is the purpose of this document to show enough examples for the containers
-data structures so that using them will seem as natural at lists. Tools availible
+When it is clear that your program is bottlenecking will bottle neck with a List, 
+consider the usecases below in choosing a new data structure. Also, familiarize
+yourself with the basic typeclasses in Haskell, so you can refactor your code
+faster to the better structures. Also recognize that the tools available
 to the Haskell programmer such as pattern matching and recursion work equally
-the same when dealing with these functional data structures.
+the same when dealing with these functional data structures. With these concepts
+in mind you will be on the right road to clear high performance Haskell code. 
 
 # Usecases
 
