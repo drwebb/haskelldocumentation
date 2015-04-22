@@ -1,14 +1,14 @@
 # Containers
 
 The containers package is the home of high performance *immutable*
-datastructures. The implementation and interface for the different structures
+data structures. The implementation and interface for the different structures
 are all conducive to a highly functional style of programming. You will likely
 find that you are will be quite comfortable using these data structures based on
 basic Haskell concepts. The purpose of this document is to give you the
 intuition behind use cases, and to provide enough examples for a programmer to
 make use of these fast data structures. 
 
-The `List` type is the first illustration of a functional datastructure you have likely
+The `List` type is the first illustration of a functional data structure you have likely
 encountered. Recall its definition
 
 ```
@@ -21,37 +21,45 @@ and the standard functions that operate on it: maps, folds, scans, etc. Now,
 consider that the recursive definition of lists is what makes them pure and
 immultable. Lists are not like their imperative counterpart Arrays, which
 represent blocks of memory that can be mutated. Lists are important to
-understand in learning the specialized datastructures in the containers library,
+understand in learning the specialized data structures in the containers library,
 and all of the techniques that you have learned in dealing with them will
 directly apply to making the best use of them. 
 
-In a language like Haskell, immutable datastructures should be prefered to
+In a language like Haskell, immutable data structures should be prefered to
 mutable ones. Unless, there is another reason for choosing a mutable
-datastructure. There are many such valid reasons, mostly due to the fact that a
+data structure. There are many such valid reasons, mostly due to the fact that a
 large number of algorithms are better written with a mutable structure. 
 
-Lists are of course slow at many operations, and they don't make sense from a
-performance perspective outside their special usecases. It's fine to favor lists 
-in production code in the following areas:
+Lists are of course slow at many operations (indexing, appending), and in many
+common usecases they won't work well from a performance perspective in your
+applications. However, you will find that in practice there are comparable
+number of usecases where lists already perform optimally. It's fine to favor
+lists in production code in the following areas:
 
 * Operations that act on each element in order
-* Situations where you don't care about performance
+* Stack like data structures.
+
+It is the purpose of this document to show enough examples for the containers
+data structures so that using them will seem as natural at lists. Tools availible
+to the Haskell programmer such as pattern matching and recursion work equally
+the same when dealing with these functional data structures.
 
 # Usecases
 
 * Fast insertion, fast lookup
   (Map, IntMap, Set, IntSet)
 
-* Fast prepend and append, fast breaking and concatenation, merging
+* Fast prepend and append, fast breaking and concatenation
   (Sequence)
-
-* Many to many relationships
-  (Graph)
 
 * Key Value Pairs
   (Map, IntMap)
 
-* 
+* Many to many relationships
+  (Graph)
+ 
+## When not to use containers 
+
 
 # Importing
 
@@ -101,9 +109,28 @@ let s = fromList [(1,"ab"), (2,"xy")]
 For a more complete introduction to common typeclasses see [the section on
 common type classes](../content/common-typeclasses.md)
 
+# Sequence
+
+Sequences are a high performance list-like data structure that first
+may look like double ended lists, but end up being much more powerful than that.
+
+Show examples for pattern matching (and view patterns extension).
+
+Show an example for an algorithm,
+
+# Map and IntMap
+
+Show lookups, handling Maybe return type.
+
+Show monoid (i.e. union) code.
+
+Discuss int map performance (need reference)
+
+# Set and IntSet
+
 # Graph
 
-The graph datastructure seems to be the odd structure out, as it does not at
+The graph data structure seems to be the odd structure out, as it does not at
 first glance have any of the common functional operations of the other
 structures we have been describing. However such functionality is hiding beneath
 the surface if we examine the types. A graph is object originally from
@@ -133,8 +160,4 @@ nodes are all reachable to each other). If you are looking for doing numerical
 work on weighted graphs you may want to use a different package such as
 `hmatrix`. 
 
-# Sequence
-
-Sequences are a high performance list-like data structure that first
-may look like double ended lists, but end up being much more powerful than that.
 
