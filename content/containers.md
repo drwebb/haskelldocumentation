@@ -62,9 +62,15 @@ in mind you will be on the right road to clear high performance Haskell code.
 * Key Value Pairs
   (Map, IntMap)
 
+* Distinct Objects
+  (Set, IntSet)
+
 * Many to many relationships
   (Graph)
  
+* Hierarchical/Branching Data
+  (Tree)
+
 ## When not to use containers 
 
 
@@ -81,17 +87,20 @@ import qualified Data.Sequence as Seq
 
 # Common typeclass instances
 
-Foldable containers can be reduced to a single value. Standard folds are
-included as functions in the relevent modules, eg. `Data.Map.foldr`. Do not
-forget that you also have at your command the functions availible in the
-Data.Foldable module. For example mapping to a monandic action `mapM`,
-specialized folds, and other common tasks. Some functionalithat you also have at
-your command the functions availible in the Data.Foldable module. For example
-executing a monandic action `mapM_` on the collection and discarding any
-results, specialized folds. For example, the function to lookup if an element is
-contained in the values of an `Map` is `elem` from `Foldable`.
+Now we will discuss the importance of typeclasses in relation to containers.
+Consider for instance `Foldable` containers, which means the container can be
+reduced to a single value. Standard folds are included as functions in the
+relevant modules, eg. `Data.Map.foldr`. Do not forget that you also have at your
+command the functions available in the Data.Foldable module. For example
+`mapM_`, specialized folds, and other common tasks are all found in this module.
+It may appear that a container is missing a basic operation, when it is really
+hidden as a function on the typeclass.  For example, the function to lookup if
+an element is contained in the values of an `Map` is `elem` from `Foldable`,
+while the `Data.Map` module only contains the function `member` to test if a key
+is present.
 
 ```
+> import Data.Foldable
 > let ngons = [("Square", 4), ("Pentagon", 5), ("Hexagon", 6)] :: Map String Int
 > mapM_ print ngons
 4
@@ -104,11 +113,11 @@ flip member ngons :: String -> Bool
 
 ```
 
-Only the two `Map` types and `Sequence` have valid instances of traversable
-written. 
+`Map` and `Sequence` have instances of traversable
+defined:
 
 ```
-let s = fromList [(1,"ab"), (2,"xy")]
+let s = fromList [(1,"ab"), (2,"xy")] :: Map Int String
 > sequenceA s
 [fromList [(1,'a'),(2,'x')],fromList [(1,'a'),(2,'y')],fromList [(1,'b'),(2,'x')],fromList [(1,'b'),(2,'y')]]
 ```
@@ -116,10 +125,18 @@ let s = fromList [(1,"ab"), (2,"xy")]
 For a more complete introduction to common typeclasses see [the section on
 common type classes](../content/common-typeclasses.md)
 
+(Maybe some sort of matrix?) 
+
+(Do I really need examples here)
+
+(Explain GHC 7.10 changes moving to Prelude)
+
+(Mention classy prelude)
+
 # Sequence
 
 Sequences are a high performance list-like data structure that first
-may look like double ended lists, but end up being much more powerful than that.
+may look like double ended lists. They are very powerful and useful.
 
 Show examples for pattern matching (and view patterns extension).
 
@@ -135,11 +152,20 @@ Discuss int map performance (need reference)
 
 # Set and IntSet
 
+# Tree
+
+(Need real world examples, maybe ASTs, or hierarchical data)
+
+(Comonad instance? Zippers?)
+
 # Graph
 
 The graph data structure seems to be the odd structure out, as it does not at
 first glance have any of the common functional operations of the other
-structures we have been describing. However such functionality is hiding beneath
+structures we have been describing. It is also a structure that is designed to
+help model relationships.
+
+However such functionality is hiding beneath
 the surface if we examine the types. A graph is object originally from
 mathematics which consists of Vertices and Edges that connect the verticies.
 They can be used to model such exciting areas such as the electrical power
@@ -160,11 +186,12 @@ array (0,5) [(0,[1,2]),(1,[2]),(2,[0,1,3]),(3,[1,2]),(4,[5]),(5,[])]
 array (0,2) [(0,[2]),(1,[2]),(2,[1])]
 ```
 
+(How to use a graph to access data, convert to list?)
+
 Algorithms in the graph package derive from bredth first searches, such as
 determing if it is possible to reach one node to another node through a set of
 connected edges, or finding strongly connected components (subgraphs where the
 nodes are all reachable to each other). If you are looking for doing numerical
 work on weighted graphs you may want to use a different package such as
 `hmatrix`. 
-
 
